@@ -1,5 +1,7 @@
 package base.pojo;
 
+import util.ValuesGlobals;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +63,14 @@ public class Plane {
     }
 
     public Point getNextPosition() {
-        return path.get(1);
+        if (!path.isEmpty() && path.size() > 1) {
+            return path.get(1);
+        } else {
+            // Возвращаем текущую позицию, если path пуст или содержит только одну точку
+            return getPosition();
+        }
     }
+
 
     public void setNextPosition(Point nextPosition) {
         if (path.size() > 1) {
