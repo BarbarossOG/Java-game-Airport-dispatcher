@@ -1,16 +1,16 @@
 package base.model;
 
-public class Timer {
+public class Chronometer {
     private long initialTime;
     private long pausedTime;
-    private static Timer instance;
+    private static Chronometer instance;
 
-    private Timer() {
+    private Chronometer() {
 
     }
 
-    public static Timer getInstance() {
-        return instance == null ? instance = new Timer() : instance;
+    public static Chronometer getInstance() {
+        return instance == null ? instance = new Chronometer() : instance;
     }
 
     public void start() {

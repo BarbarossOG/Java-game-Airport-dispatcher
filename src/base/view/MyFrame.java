@@ -17,7 +17,7 @@ public class MyFrame extends JFrame implements Contract.View {
         super();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(false);
-        this.setTitle("Диспетчер");
+        this.setTitle("Диспетчер аэродрома");
         this.setIconImage(getAppIcon());
         initComponents();
         setSizes();

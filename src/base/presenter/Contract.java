@@ -62,6 +62,7 @@ public interface Contract {
 
         void viewIsReady();
 
+
         void selectedPlaneNull();
 
         void setLandedPlanes(int landedPlanes);

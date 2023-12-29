@@ -52,8 +52,6 @@ public class Plane {
         }
     }
 
-
-
     public boolean isNewPlane() {
         return newPlane;
     }

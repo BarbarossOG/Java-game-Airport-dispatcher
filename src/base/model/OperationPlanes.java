@@ -109,7 +109,8 @@ public class OperationPlanes {
                 Plane plane = iterator.next();
                 Point currentPosition = plane.getPosition();
 
-                if (currentPosition != null && ValuesGlobals.LANDED_RECTANGLE.contains(currentPosition) && ValuesGlobals.CENTER_RECTANGLE.contains(currentPosition)) {
+                if (currentPosition != null && ((ValuesGlobals.LANDED_RECTANGLE.contains(currentPosition) && ValuesGlobals.CENTER_RECTANGLE.contains(currentPosition)) ||
+                        (ValuesGlobals.LANDED_RECTANGLE_2.contains(currentPosition) && ValuesGlobals.CENTER_RECTANGLE_2.contains(currentPosition)))  ) {
                     landedPlanes++;
                     iterator.remove(); // Используем итератор для безопасного удаления элемента из списка
                     break;
@@ -124,21 +125,7 @@ public class OperationPlanes {
         model.setLandedPlanes(landedPlanes);
     }
 
-
-   /* private void removePlanesWithoutPath() {
-        Iterator<Plane> iterator = planes.iterator();
-        while (iterator.hasNext()) {
-            Plane plane = iterator.next();
-            if (plane.getPath().isEmpty()) {
-                System.out.println("Удален самолет без маршрута: " + plane);
-                iterator.remove();
-            }
-        }
-    }*/
-
     public void crashPlanes() {
-        //removePlanesWithoutPath(); // Удаляем самолеты без маршрута перед проверкой столкновений
-
         int numPlanes = planes.size();
         for (int i = 0; i < numPlanes - 1; i++) {
             Plane plane1 = planes.get(i);
@@ -163,22 +150,25 @@ public class OperationPlanes {
             while (iterator.hasNext()) {
                 Plane plane = iterator.next();
                 if (getDistanceTo(plane, plane.getNextPosition()) == 0 && plane.getPosition().x == 0) {
+                    System.out.println("Самолёт пропал с радара. Сбой сис-мы навигации самолёта V1");
                     iterator.remove();
                     break;
                 } else if (getDistanceTo(plane, plane.getNextPosition()) == 0 && plane.getPosition().x == ValuesGlobals.WIDTH_FRAME) {
+                    System.out.println("Самолёт пропал с радара. Сбой сис-мы навигации самолёта V2");
                     iterator.remove();
                     break;
                 } else if (getDistanceTo(plane, plane.getNextPosition()) == 0 && plane.getPosition().y == 0) {
+                    System.out.println("Самолёт пропал с радара. Сбой сис-мы навигации самолёта V3");
                     iterator.remove();
                     break;
                 } else if (getDistanceTo(plane, plane.getNextPosition()) == 0 && plane.getPosition().y == ValuesGlobals.HEIGHT_FRAME) {
+                    System.out.println("Самолёт пропал с радара. Сбой сис-мы навигации самолёта V4");
                     iterator.remove();
                     break;
                 }
             }
         }
     }
-
 
 
     private void randomPositionGenerator() {
@@ -285,6 +275,7 @@ public class OperationPlanes {
         int y = plane.getPosition().y;
 
         if (x <= 0 || x >= ValuesGlobals.WIDTH_FRAME || y <= 0 || y >= ValuesGlobals.HEIGHT_FRAME) {
+            System.out.println("MoveForward");
             nextPlaneToRemove = plane;
         }
     }
@@ -298,7 +289,6 @@ public class OperationPlanes {
         } else {
             // Обработка случая, когда в пути осталась только одна точка или путь пуст
             System.out.println("Самолет с id " + planeSelected.getFinalId() + " достиг конечной точки пути.");
-            // Можете добавить дополнительную логику, соответствующую вашим требованиям
         }
     }
 
@@ -438,11 +428,11 @@ public class OperationPlanes {
     public void pauseGame() {
         if (isPauseGame) {
             isPauseGame = false;
-            Timer.getInstance().continueTime();
+            Chronometer.getInstance().continueTime();
             startGame();
         } else {
             isPauseGame = true;
-            Timer.getInstance().pauseTime();
+            Chronometer.getInstance().pauseTime();
         }
     }
 

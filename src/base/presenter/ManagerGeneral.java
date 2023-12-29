@@ -1,6 +1,6 @@
 package base.presenter;
 
-import base.model.Timer;
+import base.model.Chronometer;
 import base.model.ManagerModel;
 import base.view.MyFrame;
 
@@ -41,7 +41,7 @@ public class ManagerGeneral {
             }
             presenter.startGame();
         });
-        Timer.getInstance().start();
+        Chronometer.getInstance().start();
     }
 
 

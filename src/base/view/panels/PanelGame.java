@@ -1,7 +1,7 @@
 package base.view.panels;
 
 import base.pojo.Plane;
-import base.model.Timer;
+import base.model.Chronometer;
 import base.view.MyFrame;
 import util.ValuesGlobals;
 import util.UtilImages;
@@ -16,6 +16,7 @@ import java.util.List;
 public class PanelGame extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
     private MyFrame frame;
     private Graphics2D g2d;
+    private JLayeredPane layeredPane;
     private List<Plane> planes;
     private ImageIcon imagePlane;
     private ImageIcon imageAirPort;
@@ -39,6 +40,8 @@ public class PanelGame extends JPanel implements MouseListener, MouseMotionListe
         this.setBackground(new Color(142, 173, 184));
         initComponents();
         setSizes();
+        layeredPane = new JLayeredPane();
+        add(layeredPane);
 
     }
 
@@ -51,12 +54,26 @@ public class PanelGame extends JPanel implements MouseListener, MouseMotionListe
     }
 
 
+
+
+
     public void chargeBackground(Graphics2D g2d) {
-        g2d.drawImage(imageAirPort.getImage(), 300, 250, null);
+
+        g2d.drawImage(imageAirPort.getImage(), 280, 180, null);
         g2d.setColor(Color.GREEN);
         g2d.drawRect(ValuesGlobals.LANDED_RECTANGLE.x, ValuesGlobals.LANDED_RECTANGLE.y, ValuesGlobals.LANDED_RECTANGLE.width, ValuesGlobals.LANDED_RECTANGLE.height);
         g2d.setColor(Color.RED);
         g2d.drawRect(ValuesGlobals.CENTER_RECTANGLE.x, ValuesGlobals.CENTER_RECTANGLE.y, ValuesGlobals.CENTER_RECTANGLE.width, ValuesGlobals.CENTER_RECTANGLE.height);
+        g2d.drawRect(ValuesGlobals.LANDED_RECTANGLE_2.getBounds().x, ValuesGlobals.LANDED_RECTANGLE_2.getBounds().y,
+                ValuesGlobals.LANDED_RECTANGLE_2.getBounds().width, ValuesGlobals.LANDED_RECTANGLE_2.getBounds().height);
+        g2d.drawRect(ValuesGlobals.CENTER_RECTANGLE_2.getBounds().x, ValuesGlobals.CENTER_RECTANGLE_2.getBounds().y,
+                ValuesGlobals.CENTER_RECTANGLE_2.getBounds().width, ValuesGlobals.CENTER_RECTANGLE_2.getBounds().height);
+
+        g2d.setColor(Color.GREEN);
+
+        g2d.drawRect(ValuesGlobals.LANDED_RECTANGLE_2.x, ValuesGlobals.LANDED_RECTANGLE_2.y, ValuesGlobals.LANDED_RECTANGLE_2.width, ValuesGlobals.LANDED_RECTANGLE_2.height);
+        g2d.setColor(Color.RED);
+        g2d.drawRect(ValuesGlobals.CENTER_RECTANGLE_2.x, ValuesGlobals.CENTER_RECTANGLE_2.y, ValuesGlobals.CENTER_RECTANGLE_2.width, ValuesGlobals.CENTER_RECTANGLE_2.height);
     }
 
     @Override
@@ -78,7 +95,7 @@ public class PanelGame extends JPanel implements MouseListener, MouseMotionListe
     private void printNumberPlanes() {
         g2d.drawString("Количество самолетов: " + planes.size(), 10, 20);
         g2d.drawString("Количество приземлившихся самолетов: " + landedPlanes, 220, 20);
-        g2d.drawString("Время игры: " + Timer.getInstance().getTime(), 10, 40);
+        g2d.drawString("Время игры: " + Chronometer.getInstance().getTime(), 10, 40);
         g2d.drawString("Нажмите Esc, чтобы перейти в главное меню:", 220, 40);
     }
     public void drawAllPlanes(Graphics2D g2d) {
@@ -133,10 +150,11 @@ public class PanelGame extends JPanel implements MouseListener, MouseMotionListe
     private ImageIcon getImageAirPort() {
         UtilImages utilImages = new UtilImages();
         JLabel imageLabel = new JLabel();
-        imageLabel.setBounds(0, 0, 192, 48);
+        imageLabel.setBounds(0, 0, 370, 280);
         Icon img = utilImages.loadScaleImage(ValuesGlobals.PHAT_AIRPORT_IMAGE_ORIGINAL, imageLabel.getWidth(), imageLabel.getHeight());
         imageLabel.setIcon(img);
         return new ImageIcon(((ImageIcon) img).getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_DEFAULT));
+
     }
 
     private ImageIcon getImagePlane(String imagePlaneSelected) {
@@ -195,10 +213,11 @@ public class PanelGame extends JPanel implements MouseListener, MouseMotionListe
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == 0) {
+        if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
             frame.showMenu();
         }
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -215,7 +234,7 @@ public class PanelGame extends JPanel implements MouseListener, MouseMotionListe
     public void gameOver() {
         JOptionPane optionPane = new JOptionPane();
         optionPane.setMessage("GAME OVER");
-        if (optionPane.showConfirmDialog(frame, "Количество приземлившихся самолетов составляет " + landedPlanes + "\nВремя игры: " + Timer.getInstance().getTime() + "\nВы хотите сыграть заново?", "GAME OVER", optionPane.YES_NO_OPTION) == optionPane.YES_OPTION) {
+        if (optionPane.showConfirmDialog(frame, "Количество приземлившихся самолетов составляет " + landedPlanes + "\nВремя игры: " + Chronometer.getInstance().getTime() + "\nВы хотите сыграть заново?", "GAME OVER", optionPane.YES_NO_OPTION) == optionPane.YES_OPTION) {
             frame.setVisible(false);
             frame.getPresenter().restartGame();
         } else {
