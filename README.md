@@ -1,7 +1,3 @@
 # Air-Trafic-Control
-Air Traffic Control game where players control airplanes using the mouse to land them on a runway. Built in Java Swing, the project follows the MVP architecture, leveraging multithreading and concurrency for enhanced performance and realism.
+Игра для управления воздушным движением в аэропорте, в которой игрок играет роль диспетчера, управляя самолетами с помощью мыши, чтобы посадить их на взлетно-посадочную полосу. Проект, создан на Java Swing, соответствует архитектуре MVP, используя многопоточность и параллелизм для повышения производительности и реалистичности.
 
-Game images: 
-
-![Pause_Menu](.screenshots/1.png)
-![Game](.screenshots/2.png)
